@@ -12,10 +12,13 @@
 	[
 		{
 		"matches":["*://imgur.com/*"],
-		"js":["jquery-2.1.3.min.js", "resizer.js"],
-		"css": ["inject.css"],
+		"js":["js/jquery-2.1.3.min.js", "js/resizer.js"],
+		"css": ["css/inject.css"],
 		"run_at": "document_end"
 		}
 	],
-	"background": {"scripts": ["background.js"]}
+	"background": {"scripts": ["js/background.js"]},
+	"icons": { "16": "res/icon.png",
+           "48": "res/icon.png",
+          "128": "res/icon.png" }
 }
