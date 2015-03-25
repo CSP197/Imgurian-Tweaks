@@ -1,0 +1,23 @@
+#side-gallery .small-loader, #small-loader {
+height: 100px !important;
+width: 100px !important;
+}
+
+#cboxLoadingGraphic, .zoom-loader {
+width: 100% !important;
+}
+
+.outside-loader {
+width:100% !important;
+height:100% !important;
+}
+
+#past-wrapper #past-loader {
+width:48px !important;
+height:48px !important;
+}
+
+#shareonimgur #share-loader {
+width:24px !important;
+height:24px !important;
+}
