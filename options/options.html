@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Imgur++ Options</title>
+	<link rel="stylesheet" type="text/css" href="options.css">
+	<script src="../js/jquery-2.1.3.min.js"></script>
+	<script src="options.js"></script>
+</head>
+
+<body>
+	<img id="titleIMG" src="title.png">
+	
+	<div class="optionArea">
+		<div class="onoffswitch">
+			<input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="gifReplacement" checked>
+			<label class="onoffswitch-label" for="gifReplacement">
+				<span class="onoffswitch-inner"></span>
+				<span class="onoffswitch-switch"></span>
+			</label>
+		</div>
+		
+		<h1> Loading GIF Replacement </h1>	
+		<p> If you want to use a local file.. </p>
+		<input id="gifURL" type="text" placeholder="new loading gif url">
+		<button class="whiteButton" id="previewIMG">Preview</button>
+		<br><br>
+		Scaling Factor
+		<div id="slider">
+			0.2 <input id="scalingFactorSlider" type="range" min="0.2" max="8" step="0.1" value="1" /> 8 
+			 <label id="scalingFactorData"> 1 </label>
+		</div>
+		<br><br>
+		<div id="previewArea">
+		</div>
+	</div>
+	
+	<div class="optionArea">
+		<h1> Other Options </h1>	
+		
+		 <label>
+			<input type="checkbox" id="YouAdder">
+			Add a <label style="color: #89C623;">YOU</label> tag to comments that you write.
+		 </label>
+		
+	</div>
+	
+	<button class="whiteButton" id="save" >Save</button>
+	<p id="status"></p>
+	
+	<div id="disclaimer">
+		<p> Legal Stuff (I think I am supposed to write this...) <br>
+		This extension is in no way affiliated with, endorsed by, or produced by Imgur LLC. <br>
+		If you have any complaints please contact me at... magicaldev@outlook.com<br>
+		The top image was taken and modified from Imgur's website. </p>
+	</div>
+	
+	<p id="donate">
+		I'm a college student... I made this for fun. Donate if you wish :)
+	</p>
+</body>
+</html>
