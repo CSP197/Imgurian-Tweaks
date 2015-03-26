@@ -20,13 +20,14 @@ chrome.storage.sync.get(["loaderURL", "enableLoadingGIFReplacement", "youTag", "
 
 	if(items.enableLoadingGIFReplacement)
 	{
+		var scaleFactor = items.loaderScaleFactor;
+		
 		$('body').bind('DOMNodeInserted DOMNodeRemoved', function() {
 			if($(".tipsy-inner img").length == 0)
 				return;
 			
 			var newSize = $(".tipsy-inner img").width();
 
-			var scaleFactor = items.loaderScaleFactor;
 			
 			if(newSize <= 30)
 				newSize *= scaleFactor;
@@ -34,6 +35,6 @@ chrome.storage.sync.get(["loaderURL", "enableLoadingGIFReplacement", "youTag", "
 			$(".tipsy-inner img").css("width", newSize + "px");
 		});
 
-		$('head').append('<style id="d"> #side-gallery .small-loader, #small-loader {background-repeat: no-repeat !important; background-size:' + scaleFactor*100 + 'px auto !important; } #side-gallery .small-loader, #small-loader { height: ' + scaleFactor*100 + 'px !important; width: ' + scaleFactor*100 + 'px !important; }  #cboxLoadingGraphic, .zoom-loader { width: ' + scaleFactor*100 + '% !important; }  .outside-loader { width:' + scaleFactor*100 + '% !important; height:' + scaleFactor*100 + '% !important; }  #past-wrapper #past-loader { width:' + scaleFactor*48 + 'px !important; height:' + scaleFactor*48 + 'px !important; }  #shareonimgur #share-loader { width:' + scaleFactor*24 + 'px !important; height:' + scaleFactor*24 + 'px !important; } </style>'); 
+		$('head').append('<style id="d"> #side-gallery .small-loader, #small-loader {background-repeat: no-repeat !important; background-size:' + scaleFactor*40 + 'px auto !important; } #side-gallery .small-loader, #small-loader { height: ' + scaleFactor*40 + 'px !important; width: ' + scaleFactor*40 + 'px  !important; }  #cboxLoadingGraphic, .zoom-loader { height: auto !important;  width: ' + scaleFactor*40 + 'px !important;}  .outside-loader { width: ' + scaleFactor*40 + 'px !important; height: auto !important; }  #past-wrapper #past-loader { width:' + scaleFactor*48 + 'px !important; height:auto !important; }  #shareonimgur #share-loader { width:' + scaleFactor*24 + 'px !important; height:auto !important; } </style>'); 
 	}
 });
