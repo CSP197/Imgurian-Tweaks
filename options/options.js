@@ -10,6 +10,7 @@ function save_options() {
 		loaderScaleFactor: document.getElementById('scalingFactorSlider').value,
 		enableLoadingGIFReplacement: document.getElementById('gifReplacement').checked,
 		youTag: document.getElementById('YouAdder').checked,
+		oldBarEnabled: document.getElementById('oldBarEnabled').checked,
 	}, function() {
 		// Update status to let user know options were saved.
 		var status = document.getElementById('status');
@@ -45,6 +46,7 @@ function restore_options() {
 		loaderURL: '',
 		loaderScaleFactor: 1,
 		youTag: true,
+		oldBarEnabled: true,
 	}, function(items) {
 		document.getElementById('gifURL').value = items.loaderURL;
 		document.getElementById('scalingFactorData').value = items.loaderScaleFactor;
@@ -57,6 +59,7 @@ function restore_options() {
 			// Disable all
 		}
 		document.getElementById('YouAdder').checked = items.youTag;
+		document.getElementById('oldBarEnabled').checked = items.oldBarEnabled;
 	});
 }
 
