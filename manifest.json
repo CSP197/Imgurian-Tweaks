@@ -1,7 +1,7 @@
 {
 	"manifest_version": 2,
 	"name": "imgur++",
-	"description": "Adds new features to imgur. Also changes the loading gif for imgur...",
+	"description": "Adds new features to imgur.",
 	"version": "0.1",
 	"permissions": [
 		"webRequest",

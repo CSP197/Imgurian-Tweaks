@@ -19,3 +19,8 @@ chrome.storage.sync.get(["loaderURL", "enableLoadingGIFReplacement"], function (
 	  
 	);
 });
+
+function updateRedirectionURL()
+{
+	
+}
