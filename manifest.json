@@ -1,8 +1,8 @@
 {
 	"manifest_version": 2,
-	"name": "imgur++",
-	"description": "Adds new features to imgur.",
-	"version": "0.1",
+	"name": "Imgurian Tweaks",
+	"description": "Adds new features to imgur. You can change the loading gif, add back the upvote/downvote (ratings) bar, much more!",
+	"version": "1.0.1",
 	"permissions": [
 		"webRequest",
 		"webRequestBlocking",

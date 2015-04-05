@@ -1,6 +1,6 @@
-chrome.storage.sync.get(["loaderURL", "enableLoadingGIFReplacement"], function (items) {
+chrome.storage.sync.get(["loaderURL", "loadingGIFReplacementEnabled"], function (items) {
 	// If the user has disabled GIF Replacement, do noting
-	if(!items.enableLoadingGIFReplacement)
+	if(!items.loadingGIFReplacementEnabled)
 		return;
 	
 	// Otherwise redirect all loader requests to the user's custom URL

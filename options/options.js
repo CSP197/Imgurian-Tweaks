@@ -3,7 +3,7 @@ function save_options() {
 	chrome.storage.sync.set({
 		loaderURL: document.getElementById('gifURL').value,
 		loaderScaleFactor: document.getElementById('scalingFactorSlider').value,
-		enableLoadingGIFReplacement: document.getElementById('gifReplacement').checked,
+		loadingGIFReplacementEnabled: document.getElementById('gifReplacement').checked,
 		youTagEnabled: document.getElementById('youAddEnabled').checked,
 		oldBarEnabled: document.getElementById('oldBarEnabled').checked,
 		voteBombEnabled: document.getElementById('voteBombEnabled').checked,
@@ -24,7 +24,7 @@ function save_options() {
 function restore_options() {	
 	chrome.storage.sync.get({
 		// Default values
-		enableLoadingGIFReplacement: false,
+		loadingGIFReplacementEnabled: false,
 		loaderURL: '',
 		loaderScaleFactor: 1,
 		youTagEnabled: true,
@@ -34,10 +34,10 @@ function restore_options() {
 		document.getElementById('gifURL').value = items.loaderURL;
 		document.getElementById('scalingFactorData').value = items.loaderScaleFactor;
 		document.getElementById('scalingFactorSlider').value = items.loaderScaleFactor;
-		if(items.enableLoadingGIFReplacement)
+		if(items.loadingGIFReplacementEnabled)
 			$("#previewIMG").click();
-		document.getElementById('gifReplacement').checked = items.enableLoadingGIFReplacement;
-		if(!items.enableLoadingGIFReplacement)
+		document.getElementById('gifReplacement').checked = items.loadingGIFReplacementEnabled;
+		if(!items.loadingGIFReplacementEnabled)
 		{
 			// Disable all
 		}

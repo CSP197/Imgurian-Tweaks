@@ -2,7 +2,7 @@
 chrome.storage.sync.get(
 	{
 		// Default values
-		enableLoadingGIFReplacement: false,
+		loadingGIFReplacementEnabled: false,
 		loaderURL: '',
 		loaderScaleFactor: 1,
 		youTagEnabled: true,
@@ -14,7 +14,7 @@ chrome.storage.sync.get(
 		if(items.youTagEnabled)
 			startYouTagWatcher();
 
-		if(items.enableLoadingGIFReplacement)
+		if(items.loadingGIFReplacementEnabled)
 			startLoadingGifResizing(items.loaderScaleFactor);
 		
 		if(items.oldBarEnabled)
