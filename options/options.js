@@ -7,6 +7,8 @@ function save_options() {
 		youTagEnabled: document.getElementById('youAddEnabled').checked,
 		oldBarEnabled: document.getElementById('oldBarEnabled').checked,
 		voteBombEnabled: document.getElementById('voteBombEnabled').checked,
+		largeImageModeEnabled: document.getElementById('largeImageModeEnabled').checked,
+		sideGalleryRemoveEnabled: document.getElementById('sideGalleryRemoveEnabled').checked,
 	}, function() {
 		// Update status to let user know options were saved.
 		var status = document.getElementById('status');
@@ -30,6 +32,8 @@ function restore_options() {
 		youTagEnabled: true,
 		oldBarEnabled: true,
 		voteBombEnabled: true,
+		largeImageModeEnabled: false,
+		sideGalleryRemoveEnabled: false,
 	}, function(items) {
 		document.getElementById('gifURL').value = items.loaderURL;
 		document.getElementById('scalingFactorData').value = items.loaderScaleFactor;
@@ -44,6 +48,8 @@ function restore_options() {
 		document.getElementById('youAddEnabled').checked = items.youTagEnabled;
 		document.getElementById('oldBarEnabled').checked = items.oldBarEnabled;
 		document.getElementById('voteBombEnabled').checked = items.voteBombEnabled;
+		document.getElementById('largeImageModeEnabled').checked = items.largeImageModeEnabled;
+		document.getElementById('sideGalleryRemoveEnabled').checked = items.sideGalleryRemoveEnabled;
 	});
 }
 

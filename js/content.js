@@ -8,6 +8,8 @@ chrome.storage.sync.get(
 		youTagEnabled: true,
 		oldBarEnabled: true,
 		voteBombEnabled: true,
+		largeImageModeEnabled: false,
+		sideGalleryRemoveEnabled: false,
 	}, 
 	function (items)
 	{
@@ -22,6 +24,12 @@ chrome.storage.sync.get(
 		
 		if(items.voteBombEnabled)
 			detectVoteBombs();
+
+		if(items.largeImageModeEnabled)
+			enlargeImagePanel();
+
+		if(items.sideGalleryRemoveEnabled)
+			removeSideGallery(items.largeImageModeEnabled);
 		
 		/*
 		var dataString = $('script[type="text/javascript"]:contains("widgetFactory.mergeConfig"):eq(2)').text();
@@ -154,4 +162,21 @@ function addLongPressListener(presslength, query, func, param)
 		if ( new Date().getTime() >= (startTime + presslength) )
 			func(param);
 	});
+}
+
+function enlargeImagePanel()
+{
+	$(".main-image .panel").css("width", "63em");
+	$("#comments-container").css("width", "63em");
+	$("#content").css("width", "91em");
+}
+
+function removeSideGallery(largePanelEnabled)
+{
+	$(".next-prev-browse").remove();
+	$("#side-gallery").remove();
+	$(".advertisement").remove();
+	$("#content").css("width", "610px");
+	if(largePanelEnabled)
+		$("#content").css("width", "63em");
 }
