@@ -44,21 +44,16 @@ chrome.storage.sync.get(
 function startYouTagWatcher()
 {
 	// Run each time a comment is added
-	$('#comments').bind('DOMNodeInserted DOMNodeRemoved', function() {
+	$('#comments-container').bind('DOMNodeInserted', function() {
 		// Find out the user's username
-		var usersName = $(".account-user-name").text();
+		var usersName = $(".account-user-name").text() + ' ';
 
 		// If there is a comment with the same username, add a YOU tag
-		var commentAuthors = $(".author a")
-		.filter(function(index)
-			{
-				return index % 3 == 0;
-			}
-		)
+		var commentAuthors = $(".author a:first-child")
 		.each(function(index)
 		{
 			if(usersName == $(this).text())
-				$(this).html($(this).html() + ' <span class="green">YOU</span>');
+				$(this).html($(this).html() + ' <span class="green">YOU </span>');
 		});
 	});
 }
