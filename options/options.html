@@ -20,35 +20,35 @@
         </div>
 
         <h1> Loading GIF Replacement </h1>
-        
+
 		<input id="gifURL" type="text" placeholder="new loading gif url">
         <button class="whiteButton" id="previewIMG">Preview</button>
-        
+
 		<br>
-        <br> 
-		
+        <br>
+
 		Scaling Factor
         <div id="slider">
             0.2 <input id="scalingFactorSlider" type="range" min="0.2" max="8" step="0.1" value="1" /> 8
             <label id="scalingFactorData"> 1 </label>
         </div>
-        
+
 		<br>
         <br>
-		
+
         <div id="previewArea">
         </div>
     </div>
 
     <div class="optionArea">
         <h1> Other Options </h1>
-		
-		<p>
+
+		    <p>
             <input type="checkbox" id="oldBarEnabled" checked> Add the original upvote/downvote bar.
         </p>
 
-		<p>
-            <input type="checkbox" id="largeImageModeEnabled" checked> Make the main image panel larger 
+		    <p>
+            <input type="checkbox" id="largeImageModeEnabled" checked> Make the main image panel larger
         </p>
 
         <p>
@@ -58,9 +58,13 @@
         <p>
             <input type="checkbox" id="voteBombEnabled" checked> Allow long pressing the main upvote/downvote button to upvote/downvote bomb (gives upvotes and downvotes to all comments)
         </p>
-		
-		<p>
+
+		    <p>
             <input type="checkbox" id="youAddEnabled" checked> Add a <label style="color: #89C623;">YOU</label> tag to comments that you write.
+        </p>
+
+        <p>
+            <input type="checkbox" id="uploadContextMenuEnabled" checked> Add "upload image to imgur" context menu option to images
         </p>
     </div>
 
@@ -74,7 +78,7 @@
     </div>
 
     <p id="donate">
-		Write a review and let me know if there is a feature that you want added! 
+		Write a review and let me know if there is a feature that you want added!
         <br> <br> I'm a college student... I made this for fun. Donate if you wish :)
 		<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 			<input type="hidden" name="cmd" value="_donations">

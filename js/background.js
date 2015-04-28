@@ -1,8 +1,38 @@
-chrome.storage.sync.get(["loaderURL", "loadingGIFReplacementEnabled"], function (items) {
-	// If the user has disabled GIF Replacement, do noting
+chrome.storage.sync.get({
+	// Default values
+	loadingGIFReplacementEnabled: false,
+	loaderURL: '',
+	loaderScaleFactor: 1,
+	youTagEnabled: true,
+	oldBarEnabled: true,
+	voteBombEnabled: true,
+	largeImageModeEnabled: false,
+	sideGalleryRemoveEnabled: false,
+	uploadContextMenuEnabled: true,
+},
+ function (items) {
+	// If the user wants the uploading context menu, add it
+	if(items.uploadContextMenuEnabled)
+	{
+		function uploadToImgur(imgURL)
+		{
+			var uploadURL = "http://imgur.com/api/upload/?url=" + encodeURI(imgURL);
+			window.open(uploadURL);
+		}
+
+		chrome.contextMenus.create({
+			title: "Upload image to imgur",
+			contexts:["image"],
+			onclick: function(info) {
+				uploadToImgur(info.srcUrl);
+			}
+		});
+	}
+
+	// If the user has disabled GIF Replacement, do exit
 	if(!items.loadingGIFReplacementEnabled)
 		return;
-	
+
 	// Otherwise redirect all loader requests to the user's custom URL
 	chrome.webRequest.onBeforeRequest.addListener(
 
@@ -16,11 +46,6 @@ chrome.storage.sync.get(["loaderURL", "loadingGIFReplacementEnabled"], function 
 
 		// In request blocking mode
 		["blocking"]
-	  
+
 	);
 });
-
-function updateRedirectionURL()
-{
-	
-}
