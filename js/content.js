@@ -197,13 +197,26 @@ function removeSideGallery(largePanelEnabled)
 	}
 }
 
+function getDateString()
+{
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth();
+	var yyyy = today.getFullYear();
+	return mm + "/" + dd + "/" + yyyy;
+}
+
 function spreadTheLove()
 {
-	var loveButtonCode = '<span class="favorite-image btn btn-grey" id="spreadLoveButton" style="margin-left:78px; padding-bottom: 10px;text-align:center;">❤ Spread the love! ❤ </span>';
-	$(loveButtonCode).insertAfter(".right #side-gallery");
-	$( "#spreadLoveButton" ).click(function() {
-		window.open("http://imgur.com/account/messages?STLrecipient=" + getRandomUser());
-	});
+	var clickedToday = localStorage.getItem("imgurtweaksSTL");
+	if(clickedToday != getDateString())
+	{
+		var loveButtonCode = '<span class="favorite-image btn btn-grey" id="spreadLoveButton" style="margin-left:78px; padding-bottom: 10px;text-align:center;">❤ Spread the love! ❤ </span>';
+		$(loveButtonCode).insertAfter(".right #side-gallery");
+		$( "#spreadLoveButton" ).click(function() {
+			window.open("http://imgur.com/account/messages?STLrecipient=" + getRandomUser());
+		});
+	}
 }
 
 function getRandomUser()

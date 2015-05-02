@@ -1,6 +1,7 @@
 var url = window.location.href;
 if(url.indexOf("messages?STLrecipient=") > -1)
 {
+        localStorage.setItem("imgurtweaksSTL", getDateString());
         var recepient = url.split("messages?STLrecipient=")[1];
         $("#pm-form").prepend("<p style='padding:2px; margin-bottom: 10px'><b> Spread the Love! </b> Make someone's day by sending them a nice message!</p>");
         $(".new-message-text").click();
