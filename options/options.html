@@ -20,20 +20,20 @@
         </div>
 
         <h1> Loading GIF Replacement </h1>
-
-		<input id="gifURL" type="text" placeholder="new loading gif url">
+        <p style="padding:4px; margin:4px; color:grey; padding-top:0px; margin-top:0px;"> You can paste in any url that ends with .gif here! </p>
+	<input id="gifURL" type="text" placeholder="new loading gif url">
         <button class="whiteButton" id="previewIMG">Preview</button>
 
-		<br>
+	<br>
         <br>
 
-		Scaling Factor
+	Scaling Factor
         <div id="slider">
             0.2 <input id="scalingFactorSlider" type="range" min="0.2" max="8" step="0.1" value="1" /> 8
             <label id="scalingFactorData"> 1 </label>
         </div>
 
-		<br>
+	<br>
         <br>
 
         <div id="previewArea">
@@ -43,28 +43,32 @@
     <div class="optionArea">
         <h1> Other Options </h1>
 
-		    <p>
-            <input type="checkbox" id="oldBarEnabled" checked> Add the original upvote/downvote bar.
+	<p>
+                <input type="checkbox" id="oldBarEnabled" checked> Add the original upvote/downvote bar.
         </p>
 
-		    <p>
-            <input type="checkbox" id="largeImageModeEnabled" checked> Make the main image panel larger
-        </p>
-
-        <p>
-            <input type="checkbox" id="sideGalleryRemoveEnabled" checked> Remove the side gallery
+	<p>
+                <input type="checkbox" id="largeImageModeEnabled" checked> Make the main image panel larger
         </p>
 
         <p>
-            <input type="checkbox" id="voteBombEnabled" checked> Allow long pressing the main upvote/downvote button to upvote/downvote bomb (gives upvotes and downvotes to all comments)
-        </p>
-
-		    <p>
-            <input type="checkbox" id="youAddEnabled" checked> Add a <label style="color: #89C623;">YOU</label> tag to comments that you write.
+                <input type="checkbox" id="sideGalleryRemoveEnabled" checked> Remove the side gallery
         </p>
 
         <p>
-            <input type="checkbox" id="uploadContextMenuEnabled" checked> Add "upload image to imgur" context menu option to images
+                 <input type="checkbox" id="voteBombEnabled" checked> Allow long pressing the main upvote/downvote button to upvote/downvote bomb (gives upvotes and downvotes to all comments)
+        </p>
+
+	<p>
+                 <input type="checkbox" id="youAddEnabled" checked> Add a <label style="color: #89C623;">YOU</label> tag to comments that you write.
+        </p>
+
+        <p>
+                 <input type="checkbox" id="uploadContextMenuEnabled" checked> Add "upload image to imgur" context menu option to images
+        </p>
+
+        <p>
+                <input type="checkbox" id="spreadTheLoveEnabled" checked> Add the Spread The Love button.
         </p>
     </div>
 
@@ -75,6 +79,7 @@
         <p> Legal Stuff (I think I am supposed to write this...)
 		<br> This extension is in no way affiliated with, endorsed by, or produced by Imgur LLC.
 		<br> If you have any complaints please contact me at... magicaldev@outlook.com
+                <p> Default loading gif thanks to <a href="http://imgur.com/gallery/g2Cdl" style="color:white;">teddybutt</a>! </p>
     </div>
 
     <p id="donate">

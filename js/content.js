@@ -2,28 +2,39 @@
 chrome.storage.sync.get(
 	{
 		// Default values
-		loadingGIFReplacementEnabled: false,
-		loaderURL: '',
-		loaderScaleFactor: 1,
+		loadingGIFReplacementEnabled: true,
+		loaderURL: chrome.extension.getURL("res/loader.gif"),
+		loaderScaleFactor: 2.0,
 		youTagEnabled: true,
 		oldBarEnabled: true,
 		voteBombEnabled: true,
 		largeImageModeEnabled: false,
 		sideGalleryRemoveEnabled: false,
+		uploadContextMenuEnabled: true,
+		spreadTheLoveEnabled: true
 	},
 	function (items)
 	{
-		if(items.youTagEnabled)
-			startYouTagWatcher();
-
 		if(items.loadingGIFReplacementEnabled)
 			startLoadingGifResizing(items.loaderScaleFactor);
+
+		var url = window.location.href;
+		if(url.indexOf("/gallery/") <= -1 && url.indexOf("/favorites/") <= -1)
+			return;
+
+		var userLoggedInBool = userLoggedIn();
+
+		if(items.youTagEnabled && userLoggedInBool)
+			startYouTagWatcher();
 
 		if(items.oldBarEnabled)
 			startOldBarInject();
 
-		if(items.voteBombEnabled)
+		if(items.voteBombEnabled && userLoggedInBool)
 			detectVoteBombs();
+
+		if(items.spreadTheLoveEnabled && userLoggedInBool)
+			spreadTheLove();
 
 		if(items.largeImageModeEnabled)
 			enlargeImagePanel();
@@ -40,6 +51,12 @@ chrome.storage.sync.get(
 		*/
 
 	});
+
+// Returns whether or not a user is logged in
+function userLoggedIn()
+{
+	return ($(".account-user-name").text() != "")
+}
 
 function startYouTagWatcher()
 {
@@ -178,4 +195,19 @@ function removeSideGallery(largePanelEnabled)
 		$(".main-image .panel").css("width", "60em");
 		$("#comments-container").css("width", "60em");
 	}
+}
+
+function spreadTheLove()
+{
+	var loveButtonCode = '<span class="favorite-image btn btn-grey" id="spreadLoveButton" style="margin-left:78px; padding-bottom: 10px;text-align:center;">❤ Spread the love! ❤ </span>';
+	$(loveButtonCode).insertAfter(".right #side-gallery");
+	$( "#spreadLoveButton" ).click(function() {
+		window.open("http://imgur.com/account/messages?STLrecipient=" + getRandomUser());
+	});
+}
+
+function getRandomUser()
+{
+	var users = $(".author a:first-child");
+	return users[Math.floor(Math.random() * users.size())].text;
 }
