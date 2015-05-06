@@ -214,6 +214,7 @@ function spreadTheLove()
 		var loveButtonCode = '<span class="favorite-image btn btn-grey" id="spreadLoveButton" style="margin-left:78px; padding-bottom: 10px;text-align:center;">❤ Spread the love! ❤ </span>';
 		$(loveButtonCode).insertAfter(".right #side-gallery");
 		$( "#spreadLoveButton" ).click(function() {
+			$("#spreadLoveButton").remove();
 			window.open("http://imgur.com/account/messages?STLrecipient=" + getRandomUser());
 		});
 	}
