@@ -99,22 +99,25 @@ function startLoadingGifResizing(scaleFactor)
 
 function startOldBarInject()
 {
+	injectNewVoteBar();
+
 	// Each time the image is changed, tell imgur to update the stats
 	$('.under-title-info').bind('DOMNodeInserted DOMNodeRemoved', function() {
-		// Open the stats box invisibly for data extraction
-		$(".stats-link").click(); $(".analyticsOnly").hide(); $("#cboxClose").click(); $(".analyticsOnly").show();
+		injectNewVoteBar();
 	});
+}
 
-	// Each time the analytics are updated, update the infobar
-	$('#info-analytics').bind('DOMNodeInserted DOMNodeRemoved', function() {
+function injectNewVoteBar()
+{
+	// Get image data
+	$.get( window.location.href + ".json", function( data ) {
 		// Merge the two stat lines into one
 		$(".stats-link br").remove();
 		$(".point-info").css("margin-right", "12px");
 		$(".stats-link").css("width", "30%");
 
-		// Get upvote/downvote counts
-		var upvoteCount = parseInt($(".ups-total .value").text().replace(/,/g, ''));
-		var downvoteCount = parseInt($(".downs-total .value").text().replace(/,/g, ''));
+		var upvoteCount = data.data.image.ups;
+		var downvoteCount = data.data.image.downs;
 
 		// Inject stat bar
 		var oldStats = '<div id="oldStatBar" style="height: 0.6em; width: 78%; max-width: 300px; margin-top:1.7em; background-color:#e44;"> <div style="width: ' + upvoteCount*100/(upvoteCount+downvoteCount) + '%; height: 100%; background-color: #85BF25;"> </div>';
@@ -123,6 +126,8 @@ function startOldBarInject()
 		else
 			$("#oldStatBar").html('<div style="width: ' + upvoteCount*100/(upvoteCount+downvoteCount) + '%; height: 100%; background-color: #85BF25;">');
 	});
+
+
 }
 
 function detectVoteBombs()
