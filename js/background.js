@@ -48,4 +48,14 @@ chrome.storage.sync.get({
 		["blocking"]
 
 	);
+
+	setInterval(checkForNotifications,30000);
+
 });
+
+function checkForNotifications()
+{
+	$.get('http://imgur.com/account/notifications.json' , function(data){
+		console.log(data);
+	});
+}

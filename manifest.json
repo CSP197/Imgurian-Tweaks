@@ -19,8 +19,12 @@
 		"run_at": "document_end"
 		}
 	],
+	"browser_action": {
+	      "default_icon": "res/16x16.png",
+	      "default_popup": "popup/popup.html"
+	},
 	"background": {"scripts": ["js/background.js"]},
-	"icons": { "16": "res/icon.png",
+	"icons": { "16": "res/16x16.png",
 			   "48": "res/icon.png",
 			  "128": "res/icon.png" },
 	"options_ui": {

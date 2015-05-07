@@ -77,6 +77,8 @@ function startYouTagWatcher(userLoggedInBool)
 					$(this).html($(this).html() + ' <span class="green">YOU </span>');
 			if($.inArray($(this).text(), imgurEmployees) != -1)
 				$(this).html($(this).html() + ' <span class="green">STAFF </span>');
+		//	if("potatocannon " == $(this).text())
+		//		$(this).html($(this).html() + ' <span class="green">Imgurian Tweaks Dev </span>');
 		});
 	});
 }
