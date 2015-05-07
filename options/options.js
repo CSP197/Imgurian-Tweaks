@@ -4,7 +4,7 @@ function save_options() {
 		loaderURL: document.getElementById('gifURL').value,
 		loaderScaleFactor: document.getElementById('scalingFactorSlider').value,
 		loadingGIFReplacementEnabled: document.getElementById('gifReplacement').checked,
-		youTagEnabled: document.getElementById('youAddEnabled').checked,
+		commentTagAddEnabled: document.getElementById('commentTagAddEnabled').checked,
 		oldBarEnabled: document.getElementById('oldBarEnabled').checked,
 		voteBombEnabled: document.getElementById('voteBombEnabled').checked,
 		largeImageModeEnabled: document.getElementById('largeImageModeEnabled').checked,
@@ -31,7 +31,7 @@ function restore_options() {
 		loadingGIFReplacementEnabled: true,
 		loaderURL: chrome.extension.getURL("res/loader.gif"),
 		loaderScaleFactor: 2.0,
-		youTagEnabled: true,
+		commentTagAddEnabled: true,
 		oldBarEnabled: true,
 		voteBombEnabled: true,
 		largeImageModeEnabled: false,
@@ -49,7 +49,7 @@ function restore_options() {
 		{
 			// Disable all
 		}
-		document.getElementById('youAddEnabled').checked = items.youTagEnabled;
+		document.getElementById('commentTagAddEnabled').checked = items.commentTagAddEnabled;
 		document.getElementById('oldBarEnabled').checked = items.oldBarEnabled;
 		document.getElementById('voteBombEnabled').checked = items.voteBombEnabled;
 		document.getElementById('largeImageModeEnabled').checked = items.largeImageModeEnabled;

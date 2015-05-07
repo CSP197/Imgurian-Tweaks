@@ -3,7 +3,7 @@ chrome.storage.sync.get({
 	loadingGIFReplacementEnabled: false,
 	loaderURL: '',
 	loaderScaleFactor: 1,
-	youTagEnabled: true,
+	commentTagAddEnabled: true,
 	oldBarEnabled: true,
 	voteBombEnabled: true,
 	largeImageModeEnabled: false,

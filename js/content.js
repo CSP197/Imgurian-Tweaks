@@ -5,7 +5,7 @@ chrome.storage.sync.get(
 		loadingGIFReplacementEnabled: true,
 		loaderURL: chrome.extension.getURL("res/loader.gif"),
 		loaderScaleFactor: 2.0,
-		youTagEnabled: true,
+		commentTagAddEnabled: true,
 		oldBarEnabled: true,
 		voteBombEnabled: true,
 		largeImageModeEnabled: false,
@@ -24,8 +24,8 @@ chrome.storage.sync.get(
 
 		var userLoggedInBool = userLoggedIn();
 
-		if(items.youTagEnabled && userLoggedInBool)
-			startYouTagWatcher();
+		if(items.commentTagAddEnabled)
+			startYouTagWatcher(userLoggedInBool);
 
 		if(items.oldBarEnabled)
 			startOldBarInject();
@@ -58,19 +58,25 @@ function userLoggedIn()
 	return ($(".account-user-name").text() != "")
 }
 
-function startYouTagWatcher()
+function startYouTagWatcher(userLoggedInBool)
 {
+	var imgurEmployees = ["sarah ", "alan ", "spatrizi ", "thespottedbunny ", "tyrannoSARAusrex ", "brianna ", "andytuba ", "talklittle "];
+
 	// Run each time a comment is added
 	$('#comments-container').bind('DOMNodeInserted', function() {
 		// Find out the user's username
 		var usersName = $(".account-user-name").text() + ' ';
 
 		// If there is a comment with the same username, add a YOU tag
-		var commentAuthors = $(".author a:first-child")
-		.each(function(index)
+		var commentAuthors = $(".author a:first-child");
+
+		$.each(commentAuthors, function(index)
 		{
-			if(usersName == $(this).text())
-				$(this).html($(this).html() + ' <span class="green">YOU </span>');
+			if(userLoggedInBool)
+				if(usersName == $(this).text())
+					$(this).html($(this).html() + ' <span class="green">YOU </span>');
+			if($.inArray($(this).text(), imgurEmployees) != -1)
+				$(this).html($(this).html() + ' <span class="green">STAFF </span>');
 		});
 	});
 }
