@@ -59,3 +59,12 @@ function checkForNotifications()
 		console.log(data);
 	});
 }
+
+// Check whether new version is installed
+chrome.runtime.onInstalled.addListener(function(details){
+    if(details.reason == "install"){
+
+    }else if(details.reason == "update"){
+        window.open(chrome.extension.getURL("release_notes/index.html"));
+    }
+});
