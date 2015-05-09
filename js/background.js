@@ -1,16 +1,17 @@
 chrome.storage.sync.get({
 	// Default values
-	loadingGIFReplacementEnabled: false,
-	loaderURL: '',
-	loaderScaleFactor: 1,
-	commentTagAddEnabled: true,
+	loadingGIFReplacementEnabled: true,
+	loaderURL: chrome.extension.getURL("res/loader.gif"),
+	loaderScaleFactor: 2.0,
+	youTagAddEnabled: true,
+	staffTagAddEnabled: true,
 	oldBarEnabled: true,
 	voteBombEnabled: true,
 	largeImageModeEnabled: false,
 	sideGalleryRemoveEnabled: false,
 	uploadContextMenuEnabled: true,
-},
- function (items) {
+	spreadTheLoveEnabled: true
+}, function(items) {
 	// If the user wants the uploading context menu, add it
 	if(items.uploadContextMenuEnabled)
 	{
@@ -55,9 +56,28 @@ chrome.storage.sync.get({
 
 function checkForNotifications()
 {
-	$.get('http://imgur.com/account/notifications.json' , function(data){
-		console.log(data);
+	$.get('http://imgur.com/' , function(data){
+		auth = extractAuth(data);
+		if(!auth.notifications)
+			return false;
+		var currNotif = auth.notifications.toString();
+		if (currNotif == "0")
+			currNotif = "";
+		chrome.browserAction.setBadgeText({text:currNotif});
 	});
+}
+
+function extractAuth(data)
+{
+	var index = data.indexOf("Imgur.Environment =");
+	var data = data.substring(index, data.indexOf("};", index));
+	if(data.indexOf("auth") == -1)
+	{
+		return {};
+	}else{
+		index = data.indexOf("auth");
+		return JSON.parse(data.substring(index + 5, data.indexOf("},", index)+1));
+	}
 }
 
 // Check whether new version is installed

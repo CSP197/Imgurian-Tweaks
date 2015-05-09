@@ -5,7 +5,8 @@ chrome.storage.sync.get(
 		loadingGIFReplacementEnabled: true,
 		loaderURL: chrome.extension.getURL("res/loader.gif"),
 		loaderScaleFactor: 2.0,
-		commentTagAddEnabled: true,
+		youTagAddEnabled: true,
+		staffTagAddEnabled: true,
 		oldBarEnabled: true,
 		voteBombEnabled: true,
 		largeImageModeEnabled: false,
@@ -24,8 +25,8 @@ chrome.storage.sync.get(
 
 		var userLoggedInBool = userLoggedIn();
 
-		if(items.commentTagAddEnabled)
-			startYouTagWatcher(userLoggedInBool);
+		if(items.youTagAddEnabled || items.staffTagAddEnabled)
+			startCommentWatcher(userLoggedInBool, items.youTagAddEnabled, items.staffTagAddEnabled);
 
 		if(items.oldBarEnabled)
 			startOldBarInject();
@@ -58,7 +59,7 @@ function userLoggedIn()
 	return ($(".account-user-name").text() != "")
 }
 
-function startYouTagWatcher(userLoggedInBool)
+function startCommentWatcher(userLoggedInBool, youTagAddEnabled, staffTagAddEnabled)
 {
 	var imgurEmployees = ["sarah ", "alan ", "spatrizi ", "thespottedbunny ", "tyrannoSARAusrex ", "brianna ", "andytuba ", "talklittle "];
 
@@ -72,13 +73,11 @@ function startYouTagWatcher(userLoggedInBool)
 
 		$.each(commentAuthors, function(index)
 		{
-			if(userLoggedInBool)
+			if(userLoggedInBool && youTagAddEnabled)
 				if(usersName == $(this).text())
 					$(this).html($(this).html() + ' <span class="green">YOU </span>');
-			if($.inArray($(this).text(), imgurEmployees) != -1)
+			if(staffTagAddEnabled && $.inArray($(this).text(), imgurEmployees) != -1)
 				$(this).html($(this).html() + ' <span class="green">STAFF </span>');
-		//	if("potatocannon " == $(this).text())
-		//		$(this).html($(this).html() + ' <span class="green">Imgurian Tweaks Dev </span>');
 		});
 	});
 }
