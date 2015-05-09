@@ -87,6 +87,7 @@ chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "install"){
 
     }else if(details.reason == "update"){
-        window.open(chrome.extension.getURL("release_notes/index.html"));
+	if(details.previousVersion != "1.3.0")
+        	window.open(chrome.extension.getURL("release_notes/index.html"));
     }
 });

@@ -116,13 +116,22 @@ function startOldBarInject()
 
 function injectNewVoteBar()
 {
+	var upvoteCount = 1;
+	var downvoteCount = 0;
+
+	// Merge the two stat lines into one
+	$(".stats-link br").remove();
+	$(".point-info").css("margin-right", "12px");
+	$(".stats-link").css("width", "30%");
+	
+	var oldStats = '<div id="oldStatBar" style="height: 0.6em; width: 78%; max-width: 300px; margin-top:1.7em; background-color:#e44;"> <div style="width: ' + upvoteCount*100/(upvoteCount+downvoteCount) + '%; height: 100%; background-color: #85BF25;"> </div>';
+	if($("#oldStatBar").length == 0)
+		$(".stats-link").append(oldStats);
+	else
+		$("#oldStatBar").html('<div style="width: ' + upvoteCount*100/(upvoteCount+downvoteCount) + '%; height: 100%; background-color: #85BF25;">');
+
 	// Get image data
 	$.get( window.location.href + ".json", function( data ) {
-		// Merge the two stat lines into one
-		$(".stats-link br").remove();
-		$(".point-info").css("margin-right", "12px");
-		$(".stats-link").css("width", "30%");
-
 		var upvoteCount = data.data.image.ups;
 		var downvoteCount = data.data.image.downs;
 
