@@ -11,7 +11,8 @@ function save_options() {
 		largeImageModeEnabled: document.getElementById('largeImageModeEnabled').checked,
 		sideGalleryRemoveEnabled: document.getElementById('sideGalleryRemoveEnabled').checked,
 		uploadContextMenuEnabled: document.getElementById('uploadContextMenuEnabled').checked,
-		spreadTheLoveEnabled: document.getElementById('spreadTheLoveEnabled').checked
+		spreadTheLoveEnabled: document.getElementById('spreadTheLoveEnabled').checked,
+		notificationsEnabled: document.getElementById('notificationsEnabled').checked
 	}, function() {
 		// Update status to let user know options were saved.
 		var status = document.getElementById('status');
@@ -39,7 +40,8 @@ function restore_options() {
 		largeImageModeEnabled: false,
 		sideGalleryRemoveEnabled: false,
 		uploadContextMenuEnabled: true,
-		spreadTheLoveEnabled: true
+		spreadTheLoveEnabled: true,
+		notificationsEnabled: true
 	}, function(items) {
 		document.getElementById('gifURL').value = items.loaderURL;
 		document.getElementById('scalingFactorData').value = items.loaderScaleFactor;
@@ -59,6 +61,7 @@ function restore_options() {
 		document.getElementById('sideGalleryRemoveEnabled').checked = items.sideGalleryRemoveEnabled;
 		document.getElementById('uploadContextMenuEnabled').checked = items.uploadContextMenuEnabled;
 		document.getElementById('spreadTheLoveEnabled').checked = items.spreadTheLoveEnabled;
+		document.getElementById('notificationsEnabled').checked = items.notificationsEnabled;
 	});
 }
 

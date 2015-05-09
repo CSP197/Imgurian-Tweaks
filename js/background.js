@@ -10,7 +10,8 @@ chrome.storage.sync.get({
 	largeImageModeEnabled: false,
 	sideGalleryRemoveEnabled: false,
 	uploadContextMenuEnabled: true,
-	spreadTheLoveEnabled: true
+	spreadTheLoveEnabled: true,
+	notificationsEnabled: true
 }, function(items) {
 	// If the user wants the uploading context menu, add it
 	if(items.uploadContextMenuEnabled)
@@ -50,7 +51,8 @@ chrome.storage.sync.get({
 
 	);
 
-	setInterval(checkForNotifications,30000);
+	if(items.notificationsEnabled)
+		setInterval(checkForNotifications,30000);
 
 });
 
