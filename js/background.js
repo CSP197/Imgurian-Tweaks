@@ -82,6 +82,15 @@ function extractAuth(data)
 	}
 }
 
+function externalDataFetch(url, callback)
+{
+	$.get(url, function(data){
+		callback(data);
+		return;
+	});
+}
+
+
 // Check whether new version is installed
 chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "install"){

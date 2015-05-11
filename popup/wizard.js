@@ -1,7 +1,7 @@
 $("#loading").append("<img src='" + chrome.extension.getURL("res/loader.gif") + "' width=300px>");
 
 $.get('http://imgur.com/' , function(data){
-	auth = extractAuth(data);
+	auth = chrome.extension.getBackgroundPage().extractAuth(data);
 	if(!auth.url)
         {
                 showNotLoggedIn();
@@ -54,19 +54,6 @@ function showUserAccount(auth)
 
 	$("#loading").hide();
 	$("#userPanel").show();
-}
-
-function extractAuth(data)
-{
-	var index = data.indexOf("Imgur.Environment =");
-	var data = data.substring(index, data.indexOf("};", index));
-	if(data.indexOf("auth") == -1)
-	{
-		return {};
-	}else{
-		index = data.indexOf("auth");
-		return JSON.parse(data.substring(index + 5, data.indexOf("},", index)+1));
-	}
 }
 
 function addClickListener(query, link)
