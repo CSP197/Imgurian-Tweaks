@@ -40,7 +40,7 @@ function restore_options() {
 		largeImageModeEnabled: false,
 		sideGalleryRemoveEnabled: false,
 		uploadContextMenuEnabled: true,
-		spreadTheLoveEnabled: true,
+		spreadTheLoveEnabled: false,
 		notificationsEnabled: true
 	}, function(items) {
 		document.getElementById('gifURL').value = items.loaderURL;

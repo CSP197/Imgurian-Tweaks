@@ -12,7 +12,7 @@ chrome.storage.sync.get(
 		largeImageModeEnabled: false,
 		sideGalleryRemoveEnabled: false,
 		uploadContextMenuEnabled: true,
-		spreadTheLoveEnabled: true
+		spreadTheLoveEnabled: false
 	},
 	function (items)
 	{
@@ -109,7 +109,7 @@ function startOldBarInject()
 	injectNewVoteBar();
 
 	// Each time the image is changed, tell imgur to update the stats
-	$('.under-title-info').bind('DOMNodeInserted DOMNodeRemoved', function() {
+	$('#image-title-container').bind('DOMNodeInserted DOMNodeRemoved', function() {
 		injectNewVoteBar();
 	});
 }

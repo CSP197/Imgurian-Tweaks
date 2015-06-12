@@ -10,7 +10,7 @@ chrome.storage.sync.get({
 	largeImageModeEnabled: false,
 	sideGalleryRemoveEnabled: false,
 	uploadContextMenuEnabled: true,
-	spreadTheLoveEnabled: true,
+	spreadTheLoveEnabled: false,
 	notificationsEnabled: true
 }, function(items) {
 	// If the user wants the uploading context menu, add it
@@ -52,21 +52,42 @@ chrome.storage.sync.get({
 	);
 
 	if(items.notificationsEnabled)
-		setInterval(checkForNotifications,30000);
+		setInterval(checkForNotifications, 30000);
 
 });
+
+var currNotif = 0;
 
 function checkForNotifications()
 {
 	$.get('http://imgur.com/' , function(data){
-		auth = extractAuth(data);
+		var auth = extractAuth(data);
 		if(!auth.notifications)
 			return false;
-		var currNotif = auth.notifications.toString();
-		if (currNotif == "0")
-			currNotif = "";
-		chrome.browserAction.setBadgeText({text:currNotif});
+		var newCount = auth.notifications;
+		if (currNotif < newCount)
+		{
+			showNotification();
+			currNotif = newCount;
+		}
 	});
+}
+
+function showNotification()
+{
+	chrome.notifications.create(
+		'imgurMessage',
+		{
+			type: 'basic',
+			iconUrl: './res/16x16.png',
+			title: 'Imgur Notification!',
+			message: 'You just got a new notification on imgur!',
+			buttons: [],
+			priority: 0,
+			isClickable: true
+		},
+		function() { }
+	);
 }
 
 function extractAuth(data)
@@ -86,7 +107,6 @@ function externalDataFetch(url, callback)
 {
 	$.get(url, function(data){
 		callback(data);
-		return;
 	});
 }
 
@@ -96,7 +116,7 @@ chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "install"){
 
     }else if(details.reason == "update"){
-	if(details.previousVersion != "1.3.0" && details.previousVersion != "1.3.1")
+	if(details.previousVersion != "1.3.0" && details.previousVersion != "1.3.1"  && details.previousVersion != "1.3.2")
         	window.open(chrome.extension.getURL("release_notes/index.html"));
     }
 });
