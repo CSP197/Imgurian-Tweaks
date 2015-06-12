@@ -68,8 +68,8 @@ function checkForNotifications()
 		if (currNotif < newCount)
 		{
 			showNotification();
-			currNotif = newCount;
 		}
+		currNotif = newCount;
 	});
 }
 
@@ -88,6 +88,15 @@ function showNotification()
 		},
 		function() { }
 	);
+	chrome.notifications.onClicked.addListener(
+		function(){
+			window.open("https://www.imgur.com");
+			chrome.notifications.clear('imgurMessage');
+		}
+	);
+	setTimeout(function(){
+		chrome.notifications.clear('imgurMessage');
+	}, 10000);
 }
 
 function extractAuth(data)

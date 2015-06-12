@@ -63,22 +63,18 @@ function startCommentWatcher(userLoggedInBool, youTagAddEnabled, staffTagAddEnab
 {
 	var imgurEmployees = ["sarah ", "alan ", "spatrizi ", "thespottedbunny ", "tyrannoSARAusrex ", "brianna ", "andytuba ", "talklittle "];
 
+	// Find out the user's username
+	var usersName = $(".account-user-name").text() + ' ';
+
 	// Run each time a comment is added
-	$('#comments-container').bind('DOMNodeInserted', function() {
-		// Find out the user's username
-		var usersName = $(".account-user-name").text() + ' ';
+	$('#comments-container').bind('DOMNodeInserted', function(e) {
+		var changedAuthor = $(e.target).find(".author a:first-child");
 
-		// If there is a comment with the same username, add a YOU tag
-		var commentAuthors = $(".author a:first-child");
-
-		$.each(commentAuthors, function(index)
-		{
-			if(userLoggedInBool && youTagAddEnabled)
-				if(usersName == $(this).text())
-					$(this).html($(this).html() + ' <span class="green">YOU </span>');
-			if(staffTagAddEnabled && $.inArray($(this).text(), imgurEmployees) != -1)
-				$(this).html($(this).html() + ' <span class="green">STAFF </span>');
-		});
+		if(userLoggedInBool && youTagAddEnabled)
+			if(usersName == $(changedAuthor).text())
+				$(changedAuthor).html($(changedAuthor).html() + ' <span class="green">YOU </span>');
+		if(staffTagAddEnabled && $.inArray($(changedAuthor).text(), imgurEmployees) != -1)
+			$(changedAuthor).html($(changedAuthor).html() + ' <span class="green">STAFF </span>');
 	});
 }
 
@@ -241,3 +237,12 @@ function getRandomUser()
 	var users = $(".author a:first-child");
 	return users[Math.floor(Math.random() * users.size())].text;
 }
+/*
+function addResizerButton()
+{
+	<div id="options-btn" class="options-btn combobox post-menu right" name="size">
+            <span class="selection"></span>
+            <span class="icon-menu"></span>
+    </div>
+}
+*/
