@@ -204,7 +204,7 @@ function removeSideGallery(largePanelEnabled)
 	{
 		$("#content").css("width", "60em");
 		$(".main-image .panel").css("width", "60em");
-		$(".main-image .image img").css("max-width", "63em");
+		$(".main-image .image img").css("max-width", "60em");
 		$("#comments-container").css("width", "60em");
 	}
 }
