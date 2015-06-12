@@ -137,8 +137,6 @@ function injectNewVoteBar()
 
 		$("#oldStatBar").html('<div style="width: ' + upvoteCount*100/(upvoteCount+downvoteCount) + '%; height: 100%; background-color: #85BF25;">');
 	});
-
-
 }
 
 function detectVoteBombs()
@@ -195,6 +193,7 @@ function addLongPressListener(presslength, query, func, param)
 function enlargeImagePanel()
 {
 	$(".main-image .panel").css("width", "63em");
+	$(".main-image .image img").css("max-width", "63em");
 	$("#comments-container").css("width", "63em");
 	$("#content").css("width", "91em");
 }
@@ -209,6 +208,7 @@ function removeSideGallery(largePanelEnabled)
 	{
 		$("#content").css("width", "60em");
 		$(".main-image .panel").css("width", "60em");
+		$(".main-image .image img").css("max-width", "63em");
 		$("#comments-container").css("width", "60em");
 	}
 }
