@@ -90,7 +90,7 @@ function showNotification()
 	);
 	chrome.notifications.onClicked.addListener(
 		function(){
-			window.open("https://www.imgur.com");
+			// window.open("https://www.imgur.com");
 			chrome.notifications.clear('imgurMessage');
 		}
 	);
@@ -125,7 +125,7 @@ chrome.runtime.onInstalled.addListener(function(details){
     if(details.reason == "install"){
 
     }else if(details.reason == "update"){
-	if(details.previousVersion != "1.3.0" && details.previousVersion != "1.3.1"  && details.previousVersion != "1.3.2")
+	if(details.previousVersion != "1.3.0" && details.previousVersion != "1.3.1"  && details.previousVersion != "1.4.0" && details.previousVersion != "1.4.1")
         	window.open(chrome.extension.getURL("release_notes/index.html"));
     }
 });
