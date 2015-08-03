@@ -122,10 +122,11 @@ function externalDataFetch(url, callback)
 
 // Check whether new version is installed
 chrome.runtime.onInstalled.addListener(function(details){
+	return;
     if(details.reason == "install"){
 
     }else if(details.reason == "update"){
-	if(details.previousVersion != "1.3.0" && details.previousVersion != "1.3.1"  && details.previousVersion != "1.4.0" && details.previousVersion != "1.4.1")
+	if(details.previousVersion != "1.3.0" && details.previousVersion != "1.3.1"  && details.previousVersion != "1.4.0" && details.previousVersion != "1.4.1" && details.previousVersion != "1.5.0")
         	window.open(chrome.extension.getURL("release_notes/index.html"));
     }
 });
