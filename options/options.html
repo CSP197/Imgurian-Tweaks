@@ -33,7 +33,7 @@
             <label id="scalingFactorData"> 1 </label>
         </div>
 
-	<br>
+	       <br>
         <br>
 
         <div id="previewArea">
@@ -43,11 +43,11 @@
     <div class="optionArea">
         <h1> Other Options </h1>
 
-	<p>
+	       <p>
                 <input type="checkbox" id="oldBarEnabled" checked> Add the original upvote/downvote bar
         </p>
 
-	<p>
+	       <p>
                 <input type="checkbox" id="largeImageModeEnabled" checked> Make the main image panel larger
         </p>
 
@@ -59,7 +59,7 @@
                  <input type="checkbox" id="voteBombEnabled" checked> Allow long pressing the main upvote/downvote button to upvote/downvote bomb (gives upvotes and downvotes to all comments)
         </p>
 
-	<p>
+	       <p>
                  <input type="checkbox" id="youTagAddEnabled" checked> Add a <label style="color: #89C623;">YOU</label> tag to comments that you write
         </p>
 
@@ -72,11 +72,16 @@
         </p>
 
         <p>
-                <input type="checkbox" id="spreadTheLoveEnabled" checked> Add the <a href="http://imgur.com/gallery/c0wVR" style="color:white;">Spread The Love</a> button
-        </p>
-
-        <p>
                 <input type="checkbox" id="notificationsEnabled" checked> Keep me updated on my imgur notifications
+        </p>
+        <p>
+                <input type="checkbox" id="spreadTheLoveEnabled" checked> Add the <a href="http://imgur.com/gallery/c0wVR" style="color:white;">Spread The Love</a> button
+
+                <div id="STLMessageSetter">
+                  <label id="STLDefaultLabel"> Set Spread The Love default text to: </label> <br>
+                  <textarea id="STLMessage"></textarea> <br>
+                  <input type="checkbox" id="spreadTheLoveLimitEnabled" checked> Limit to one Spread The Love message per day
+                </div>
         </p>
     </div>
 

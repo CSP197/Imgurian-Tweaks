@@ -12,7 +12,9 @@ function save_options() {
 		sideGalleryRemoveEnabled: document.getElementById('sideGalleryRemoveEnabled').checked,
 		uploadContextMenuEnabled: document.getElementById('uploadContextMenuEnabled').checked,
 		spreadTheLoveEnabled: document.getElementById('spreadTheLoveEnabled').checked,
-		notificationsEnabled: document.getElementById('notificationsEnabled').checked
+		notificationsEnabled: document.getElementById('notificationsEnabled').checked,
+		STLMessage: document.getElementById('STLMessage').value,
+		spreadTheLoveLimitEnabled: document.getElementById('spreadTheLoveLimitEnabled').checked
 	}, function() {
 		// Update status to let user know options were saved.
 		var status = document.getElementById('status');
@@ -41,7 +43,9 @@ function restore_options() {
 		sideGalleryRemoveEnabled: false,
 		uploadContextMenuEnabled: true,
 		spreadTheLoveEnabled: false,
-		notificationsEnabled: true
+		notificationsEnabled: true,
+		STLMessage: "I hope you have a great day! Don't let anything bring you down!",
+		spreadTheLoveLimitEnabled: true
 	}, function(items) {
 		document.getElementById('gifURL').value = items.loaderURL;
 		document.getElementById('scalingFactorData').value = items.loaderScaleFactor;
@@ -62,6 +66,9 @@ function restore_options() {
 		document.getElementById('uploadContextMenuEnabled').checked = items.uploadContextMenuEnabled;
 		document.getElementById('spreadTheLoveEnabled').checked = items.spreadTheLoveEnabled;
 		document.getElementById('notificationsEnabled').checked = items.notificationsEnabled;
+		document.getElementById('STLMessage').value = items.STLMessage;
+		document.getElementById('spreadTheLoveLimitEnabled').checked = items.spreadTheLoveLimitEnabled;
+		updateSTLView();
 	});
 }
 
@@ -83,3 +90,14 @@ $("#previewIMG").click(function(){
 $("#save").click(function(){
 	save_options();
 });
+
+function updateSTLView(){
+	if(document.getElementById('spreadTheLoveEnabled').checked)
+	{
+		$('#STLMessageSetter').css("display", "inline");
+	}else{
+		$('#STLMessageSetter').css("display", "none");
+	}
+}
+
+$('#spreadTheLoveEnabled').click(updateSTLView);

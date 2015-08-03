@@ -1,3 +1,5 @@
+var usingLargePanel = false;
+
 // Fetch user's saved settings
 chrome.storage.sync.get(
 	{
@@ -12,10 +14,12 @@ chrome.storage.sync.get(
 		largeImageModeEnabled: false,
 		sideGalleryRemoveEnabled: false,
 		uploadContextMenuEnabled: true,
-		spreadTheLoveEnabled: false
-	},
-	function (items)
-	{
+		spreadTheLoveEnabled: false,
+		spreadTheLoveLimitEnabled: true
+	}, function(items) {
+		usingLargePanel = items.largeImageModeEnabled;
+		addResizerButton();
+
 		if(items.loadingGIFReplacementEnabled)
 			startLoadingGifResizing(items.loaderScaleFactor);
 
@@ -35,7 +39,7 @@ chrome.storage.sync.get(
 			detectVoteBombs();
 
 		if(items.spreadTheLoveEnabled && userLoggedInBool)
-			spreadTheLove();
+			spreadTheLove(items.spreadTheLoveLimitEnabled);
 
 		if(items.largeImageModeEnabled)
 			enlargeImagePanel();
@@ -192,7 +196,64 @@ function enlargeImagePanel()
 	$(".main-image .image img").css("max-width", "63em");
 	$("#comments-container").css("width", "63em");
 	$("#content").css("width", "91em");
+	$(".main-image #image-title-container h1, .main-image h1#title").css("width", "66.4em");
+	$(".album-truncated").css("width", "66.4em");
+	$("#sticky-header").css("width", "66.4em");
+
+
+	// MegaMode
+	/*
+$(".main-image .panel").css("width", "70vw");
+	$(".main-image .image img").css("max-width", "70vw");
+	$("#comments-container").css("width", "70vw");
+	$("#content").css("width", "93vw");
+$("#right-content").css("width", "20vw");
+$("#side-gallery").css("width", "100%");
+	*/
 }
+
+function revertToSmallImagePanel()
+{
+	$(".main-image .panel").css("width", "610px");
+	$(".main-image .image img").css("max-width", "610px");
+	$("#comments-container").css("width", "610px");
+	$("#content").css("width", "1000px");
+	$(".main-image #image-title-container h1, .main-image h1#title").css("width", "610px");
+	$(".album-truncated").css("width", "610px");
+	$("#sticky-header").css("width", "610px");
+}
+
+function getCurrentResizePic()
+{
+	if (usingLargePanel) {
+		return chrome.extension.getURL("res/fullscreen-exit-8x.png");
+	}else {
+		return chrome.extension.getURL("res/fullscreen-enter-8x.png");
+	}
+}
+
+function addResizerButton()
+{
+	var resizeButton = '<img src="' + getCurrentResizePic() + '" id="resizeButton" style="height: 14px; margin-top: 12px; -webkit-filter: invert(60%);" class="options-btn combobox post-menu right">';
+	$(".image-options.button-container").prepend(resizeButton);
+	$("#resizeButton").click(toggleSize);
+}
+
+function toggleSize()
+{
+	usingLargePanel = !usingLargePanel;
+	$("#resizeButton").attr('src', getCurrentResizePic());
+	if(usingLargePanel)
+	{
+		enlargeImagePanel();
+	}else {
+		revertToSmallImagePanel();
+	}
+	chrome.storage.sync.set({
+		largeImageModeEnabled: usingLargePanel
+	});
+}
+
 
 function removeSideGallery(largePanelEnabled)
 {
@@ -218,15 +279,16 @@ function getDateString()
 	return mm + "/" + dd + "/" + yyyy;
 }
 
-function spreadTheLove()
+function spreadTheLove(limitEnabled)
 {
 	var clickedToday = localStorage.getItem("imgurtweaksSTL");
-	if(clickedToday != getDateString())
+	if(!limitEnabled || clickedToday != getDateString())
 	{
 		var loveButtonCode = '<span class="favorite-image btn btn-grey" id="spreadLoveButton" style="margin-left:78px; padding-bottom: 10px;text-align:center;">❤ Spread the love! ❤ </span>';
 		$(loveButtonCode).insertAfter(".right #side-gallery");
 		$( "#spreadLoveButton" ).click(function() {
-			$("#spreadLoveButton").remove();
+			if(limitEnabled)
+				$("#spreadLoveButton").remove();
 			window.open("http://imgur.com/account/messages?STLrecipient=" + getRandomUser());
 		});
 	}
@@ -237,12 +299,3 @@ function getRandomUser()
 	var users = $(".author a:first-child");
 	return users[Math.floor(Math.random() * users.size())].text;
 }
-/*
-function addResizerButton()
-{
-	<div id="options-btn" class="options-btn combobox post-menu right" name="size">
-            <span class="selection"></span>
-            <span class="icon-menu"></span>
-    </div>
-}
-*/

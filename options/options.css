@@ -44,6 +44,17 @@ body {
 	padding: 8px;
 }
 
+#STLMessage {
+  width: 40vw;
+  max-width: 35em;
+  font-size: 14px;
+  margin: 5px;
+}
+
+#STLMessageSetter{
+    font-size: 15px;
+}
+
 #status {
 	margin: 5px;
 }

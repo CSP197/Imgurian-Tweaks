@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Imgurian Tweaks",
 	"description": "Adds new features to imgur. You can change the loading gif, add back the upvote/downvote (ratings) bar, much more!",
-	"version": "1.4.1",
+	"version": "1.5.0",
 	"permissions": [
 		"webRequest",
 		"webRequestBlocking",
@@ -32,6 +32,8 @@
 	"web_accessible_resources": [
 		"res/loader.gif",
 		"res/marquee.png",
+		"res/fullscreen-enter-8x.png",
+		"res/fullscreen-exit-8x.png",
 		"release_notes/index.html"
 	]
 }
