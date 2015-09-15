@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Imgurian Tweaks",
 	"description": "Adds new features to imgur. You can change the loading gif, add back the upvote/downvote (ratings) bar, much more!",
-	"version": "1.5.0",
+	"version": "1.6.0",
 	"permissions": [
 		"webRequest",
 		"webRequestBlocking",
@@ -16,7 +16,7 @@
 		{
 		"matches":["*://imgur.com/*"],
 		"js":["js/jquery-2.1.4.min.js", "js/content.js", "js/messageloader.js"],
-		"css": [],
+		"css": ["css/inject.css"],
 		"run_at": "document_end"
 		}
 	],

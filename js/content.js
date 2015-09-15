@@ -72,13 +72,13 @@ function startCommentWatcher(userLoggedInBool, youTagAddEnabled, staffTagAddEnab
 
 	// Run each time a comment is added
 	$('#comments-container').bind('DOMNodeInserted', function(e) {
-		var changedAuthor = $(e.target).find(".author a:first-child");
-
-		if(userLoggedInBool && youTagAddEnabled)
-			if(usersName == $(changedAuthor).text())
-				$(changedAuthor).html($(changedAuthor).html() + ' <span class="green">YOU </span>');
-		if(staffTagAddEnabled && $.inArray($(changedAuthor).text(), imgurEmployees) != -1)
-			$(changedAuthor).html($(changedAuthor).html() + ' <span class="green">STAFF </span>');
+		$(e.target).find('.author a:first-child').each(function(i) {
+			if(userLoggedInBool && youTagAddEnabled)
+				if(usersName == $(this).text())
+					$(this).html($(this).html() + ' <span class="green">YOU </span>');
+			if(staffTagAddEnabled && $.inArray($(this).text(), imgurEmployees) != -1)
+				$(this).html($(this).html() + ' <span class="green">STAFF </span>');
+		});
 	});
 }
 
@@ -109,7 +109,7 @@ function startOldBarInject()
 	injectNewVoteBar();
 
 	// Each time the image is changed, tell imgur to update the stats
-	$('#image-title-container').bind('DOMNodeInserted DOMNodeRemoved', function() {
+	$('.post-title').bind('DOMNodeInserted DOMNodeRemoved', function() {
 		injectNewVoteBar();
 	});
 }
@@ -120,8 +120,8 @@ function injectNewVoteBar()
 	var downvoteCount = 0;
 
 	// Merge the two stat lines into one
-	$(".stats-link br").remove();
-	$(".point-info").css("margin-right", "12px");
+	$(".action-bar .views-info").css("clear", "none");
+	$(".point-info").css("margin-right", "0.5em");
 	$(".stats-link").css("width", "30%");
 
 	var oldStats = '<div id="oldStatBar" style="height: 0.6em; width: 78%; max-width: 300px; margin-top:1.7em; background-color:#e44;"> <div style="width: ' + upvoteCount*100/(upvoteCount+downvoteCount) + '%; height: 100%; background-color: #85BF25;"> </div>';
@@ -192,14 +192,12 @@ function addLongPressListener(presslength, query, func, param)
 
 function enlargeImagePanel()
 {
-	$(".main-image .panel").css("width", "63em");
-	$(".main-image .image img").css("max-width", "63em");
-	$("#comments-container").css("width", "63em");
-	$("#content").css("width", "91em");
-	$(".main-image #image-title-container h1, .main-image h1#title").css("width", "66.4em");
-	$(".album-truncated").css("width", "66.4em");
-	$("#sticky-header").css("width", "66.4em");
-
+	$("#inside").css("width", "1200px");
+	$(".post-container").css("width", "880px");
+	$(".post-header").css("width", "840px");
+	$(".post-title").css("max-width", "660px");
+	$("#comments-container").css("width", "840px");
+	$(".post-image img, .post-image video, .post-image object").css("width", "820px");
 
 	// MegaMode
 	/*
@@ -214,13 +212,12 @@ $("#side-gallery").css("width", "100%");
 
 function revertToSmallImagePanel()
 {
-	$(".main-image .panel").css("width", "610px");
-	$(".main-image .image img").css("max-width", "610px");
-	$("#comments-container").css("width", "610px");
-	$("#content").css("width", "1000px");
-	$(".main-image #image-title-container h1, .main-image h1#title").css("width", "610px");
-	$(".album-truncated").css("width", "610px");
-	$("#sticky-header").css("width", "610px");
+	$("#inside").css("width", "1000px");
+	$(".post-container").css("width", "680px");
+	$(".post-header").css("width", "640px");
+	$(".post-title").css("max-width", "440px");
+	$("#comments-container").css("width", "640px");
+	$(".post-image img, .post-image video, .post-image object").css("width", "620px");
 }
 
 function getCurrentResizePic()
@@ -249,6 +246,12 @@ function toggleSize()
 	}else {
 		revertToSmallImagePanel();
 	}
+
+	if($("#right-content").length == 0)
+	{
+		removeSideGallery(usingLargePanel);
+	}
+
 	chrome.storage.sync.set({
 		largeImageModeEnabled: usingLargePanel
 	});
@@ -257,17 +260,10 @@ function toggleSize()
 
 function removeSideGallery(largePanelEnabled)
 {
-	$(".next-prev-browse").remove();
-	$("#side-gallery").remove();
-	$(".advertisement").remove();
-	$("#content").css("width", "610px");
+	$("#right-content").remove();
+	$("#inside").css("width", "680px");
 	if(largePanelEnabled)
-	{
-		$("#content").css("width", "60em");
-		$(".main-image .panel").css("width", "60em");
-		$(".main-image .image img").css("max-width", "60em");
-		$("#comments-container").css("width", "60em");
-	}
+		$("#inside").css("width", "885px");
 }
 
 function getDateString()
@@ -284,7 +280,7 @@ function spreadTheLove(limitEnabled)
 	var clickedToday = localStorage.getItem("imgurtweaksSTL");
 	if(!limitEnabled || clickedToday != getDateString())
 	{
-		var loveButtonCode = '<span class="favorite-image btn btn-grey" id="spreadLoveButton" style="margin-left:78px; padding-bottom: 10px;text-align:center;">❤ Spread the love! ❤ </span>';
+		var loveButtonCode = '<span class="favorite-image btn btn-grey" id="spreadLoveButton" style="margin-top:10px; margin-left:58px; padding-bottom: 10px;text-align:center;">❤ Spread the love! ❤ </span>';
 		$(loveButtonCode).insertAfter(".right #side-gallery");
 		$( "#spreadLoveButton" ).click(function() {
 			if(limitEnabled)

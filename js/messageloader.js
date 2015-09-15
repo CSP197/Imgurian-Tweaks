@@ -1,12 +1,5 @@
 var url = window.location.href;
 
-chrome.storage.sync.get({
-  // Default values
-  STLMessage: "I hope you have a great day! Don't let anything bring you down!"
-}, function(items) {
-  $("textarea[title='Message']").val(items.STLMessage);
-});
-
 if(url.indexOf("messages?STLrecipient=") > -1)
 {
 
@@ -17,9 +10,15 @@ if(url.indexOf("messages?STLrecipient=") > -1)
 
     if(recepient.indexOf("potatocannon") == -1)
     {
-      $("#pm-form").prepend("<p style='padding:2px; margin-bottom: 10px'><b> Spread the Love! </b> Make someone's day by sending them a nice message!</p>");
-      $("#cboxContent").height("285px");
-      $("#cboxLoadedContent").height("285px");
+        chrome.storage.sync.get({
+            // Default values
+            STLMessage: "I hope you have a great day! Don't let anything bring you down!"
+        }, function(items) {
+            $("textarea[title='Message']").val(items.STLMessage);
+        });
+        $("#pm-form").prepend("<p style='padding:2px; margin-bottom: 10px'><b> Spread the Love! </b> Make someone's day by sending them a nice message!</p>");
+        $("#cboxContent").height("285px");
+        $("#cboxLoadedContent").height("285px");
     }
 
     var extensionIcon = '<img style="float:right; height:32px; padding-right:10px;" src="' + chrome.extension.getURL("res/marquee.png") + '">';

@@ -54,6 +54,12 @@ chrome.storage.sync.get({
 	if(items.notificationsEnabled)
 		setInterval(checkForNotifications, 30000);
 
+	chrome.notifications.onClicked.addListener(
+		function(){
+			chrome.notifications.clear('imgurMessage');
+			window.open("https://www.imgur.com");
+		}
+	);
 });
 
 var currNotif = 0;
@@ -87,12 +93,6 @@ function showNotification()
 			isClickable: true
 		},
 		function() { }
-	);
-	chrome.notifications.onClicked.addListener(
-		function(){
-			// window.open("https://www.imgur.com");
-			chrome.notifications.clear('imgurMessage');
-		}
 	);
 	setTimeout(function(){
 		chrome.notifications.clear('imgurMessage');
