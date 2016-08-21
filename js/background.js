@@ -14,22 +14,22 @@ chrome.storage.sync.get({
 	notificationsEnabled: true
 }, function(items) {
 	// If the user wants the uploading context menu, add it
-	if(items.uploadContextMenuEnabled)
-	{
-		function uploadToImgur(imgURL)
-		{
-			var uploadURL = "http://imgur.com/api/upload/?url=" + encodeURI(imgURL);
-			window.open(uploadURL);
-		}
+	// if(items.uploadContextMenuEnabled)
+	// {
+	// 	function uploadToImgur(imgURL)
+	// 	{
+	// 		var uploadURL = "http://imgur.com/api/upload/?url=" + encodeURI(imgURL);
+	// 		window.open(uploadURL);
+	// 	}
 
-		chrome.contextMenus.create({
-			title: "Upload image to imgur",
-			contexts:["image"],
-			onclick: function(info) {
-				uploadToImgur(info.srcUrl);
-			}
-		});
-	}
+	// 	chrome.contextMenus.create({
+	// 		title: "Upload image to imgur",
+	// 		contexts:["image"],
+	// 		onclick: function(info) {
+	// 			uploadToImgur(info.srcUrl);
+	// 		}
+	// 	});
+	// }
 
 	// If the user has disabled GIF Replacement, do exit
 	if(!items.loadingGIFReplacementEnabled)
@@ -62,20 +62,22 @@ chrome.storage.sync.get({
 	);
 });
 
-var currNotif = 0;
+var currNotifCount = 0;
 
 function checkForNotifications()
 {
-	$.get('http://imgur.com/' , function(data){
-		var auth = extractAuth(data);
-		if(!auth.notifications)
-			return false;
-		var newCount = auth.notifications;
-		if (currNotif < newCount)
+	$.get('https://imgur.com/account/messages.json' , function(data){
+		data = data.data;
+		var newNotifCount = 0;
+		for(var type_i in data["notification_types"])
+		{
+			newNotifCount += data["notifications"][data["notification_types"][type_i]].length;
+		}
+		if (currNotifCount < newNotifCount)
 		{
 			showNotification();
 		}
-		currNotif = newCount;
+		currNotifCount = newNotifCount;
 	});
 }
 
@@ -99,6 +101,7 @@ function showNotification()
 	}, 10000);
 }
 
+// No longer used
 function extractAuth(data)
 {
 	var index = data.indexOf("Imgur.Environment =");

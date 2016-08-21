@@ -7,10 +7,10 @@ function save_options() {
 		youTagAddEnabled: document.getElementById('youTagAddEnabled').checked,
 		staffTagAddEnabled: document.getElementById('staffTagAddEnabled').checked,
 		oldBarEnabled: document.getElementById('oldBarEnabled').checked,
-		voteBombEnabled: document.getElementById('voteBombEnabled').checked,
+		// voteBombEnabled: document.getElementById('voteBombEnabled').checked,
 		largeImageModeEnabled: document.getElementById('largeImageModeEnabled').checked,
 		sideGalleryRemoveEnabled: document.getElementById('sideGalleryRemoveEnabled').checked,
-		uploadContextMenuEnabled: document.getElementById('uploadContextMenuEnabled').checked,
+		// uploadContextMenuEnabled: document.getElementById('uploadContextMenuEnabled').checked,
 		spreadTheLoveEnabled: document.getElementById('spreadTheLoveEnabled').checked,
 		notificationsEnabled: document.getElementById('notificationsEnabled').checked,
 		STLMessage: document.getElementById('STLMessage').value,
@@ -38,10 +38,10 @@ function restore_options() {
 		youTagAddEnabled: true,
 		staffTagAddEnabled: true,
 		oldBarEnabled: true,
-		voteBombEnabled: true,
+		// voteBombEnabled: true,
 		largeImageModeEnabled: false,
 		sideGalleryRemoveEnabled: false,
-		uploadContextMenuEnabled: true,
+		// uploadContextMenuEnabled: true,
 		spreadTheLoveEnabled: false,
 		notificationsEnabled: true,
 		STLMessage: "I hope you have a great day! Don't let anything bring you down!",
@@ -60,10 +60,10 @@ function restore_options() {
 		document.getElementById('youTagAddEnabled').checked = items.youTagAddEnabled;
 		document.getElementById('staffTagAddEnabled').checked = items.staffTagAddEnabled;
 		document.getElementById('oldBarEnabled').checked = items.oldBarEnabled;
-		document.getElementById('voteBombEnabled').checked = items.voteBombEnabled;
+		// document.getElementById('voteBombEnabled').checked = items.voteBombEnabled;
 		document.getElementById('largeImageModeEnabled').checked = items.largeImageModeEnabled;
 		document.getElementById('sideGalleryRemoveEnabled').checked = items.sideGalleryRemoveEnabled;
-		document.getElementById('uploadContextMenuEnabled').checked = items.uploadContextMenuEnabled;
+		// document.getElementById('uploadContextMenuEnabled').checked = items.uploadContextMenuEnabled;
 		document.getElementById('spreadTheLoveEnabled').checked = items.spreadTheLoveEnabled;
 		document.getElementById('notificationsEnabled').checked = items.notificationsEnabled;
 		document.getElementById('STLMessage').value = items.STLMessage;

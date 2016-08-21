@@ -8,7 +8,7 @@ if(url.indexOf("messages?STLrecipient=") > -1)
     $(".new-message-text").click();
     $("input[type='text'][name='recipient']").val(recepient);
 
-    if(recepient.indexOf("potatocannon") == -1)
+    if(recepient.indexOf("patatocannon") == -1)
     {
         chrome.storage.sync.get({
             // Default values

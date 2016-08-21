@@ -1,4 +1,5 @@
 var usingLargePanel = false;
+var sideGalleryRemoved = false;
 
 // Fetch user's saved settings
 chrome.storage.sync.get(
@@ -18,7 +19,7 @@ chrome.storage.sync.get(
 		spreadTheLoveLimitEnabled: true
 	}, function(items) {
 		usingLargePanel = items.largeImageModeEnabled;
-		addResizerButton();
+		startAddResizerButton();
 
 		if(items.loadingGIFReplacementEnabled)
 			startLoadingGifResizing(items.loaderScaleFactor);
@@ -45,7 +46,8 @@ chrome.storage.sync.get(
 			enlargeImagePanel();
 
 		if(items.sideGalleryRemoveEnabled)
-			removeSideGallery(items.largeImageModeEnabled);
+			removeSideGallery();
+		sideGalleryRemoved = items.sideGalleryRemoveEnabled;
 
 		/*
 		var dataString = $('script[type="text/javascript"]:contains("widgetFactory.mergeConfig"):eq(2)').text();
@@ -60,26 +62,35 @@ chrome.storage.sync.get(
 // Returns whether or not a user is logged in
 function userLoggedIn()
 {
-	return ($(".account-user-name").text() != "")
+	return ($(".account-user-name").text() != "");
 }
 
 function startCommentWatcher(userLoggedInBool, youTagAddEnabled, staffTagAddEnabled)
 {
-	var imgurEmployees = ["sarah ", "alan ", "spatrizi ", "thespottedbunny ", "tyrannoSARAusrex ", "brianna ", "andytuba ", "talklittle "];
+	var imgurEmployees = ["sarah", "alan", "spatrizi", "thespottedbunny", "tyrannoSARAusrex", "brianna", "andytuba", "talklittle"];
 
 	// Find out the user's username
-	var usersName = $(".account-user-name").text() + ' ';
+	var usersName = $(".account-user-name").text();
 
-	// Run each time a comment is added
-	$('#comments-container').bind('DOMNodeInserted', function(e) {
-		$(e.target).find('.author a:first-child').each(function(i) {
+	$(document).on('DOMNodeInserted', '#comments-container .children:first', function(e){
+		$(e.target).find('.author').each(function(i) {
+			var comment_writer = $(this).find(".comment-username").text();
 			if(userLoggedInBool && youTagAddEnabled)
-				if(usersName == $(this).text())
-					$(this).html($(this).html() + ' <span class="green">YOU </span>');
-			if(staffTagAddEnabled && $.inArray($(this).text(), imgurEmployees) != -1)
-				$(this).html($(this).html() + ' <span class="green">STAFF </span>');
+				if(usersName == comment_writer)
+					addCommentTag(this, "YOU");
+			if(staffTagAddEnabled && $.inArray(comment_writer, imgurEmployees) != -1)
+				addCommentTag(this, "STAFF");
 		});
 	});
+}
+
+function addCommentTag(comment, tag){
+	var toInsert = '<span style="color: #39c442; padding: 0 4px; font-weight: 700; margin-left: 6px;">' + tag + ' </span>';
+	if($(comment).find(".via").length != 0){
+		$(toInsert).insertAfter($(comment).find(".via"));
+	}else{
+		$(toInsert).insertAfter($(comment).find(".comment-username"));
+	}
 }
 
 function startLoadingGifResizing(scaleFactor)
@@ -107,42 +118,43 @@ function startLoadingGifResizing(scaleFactor)
 function startOldBarInject()
 {
 	injectNewVoteBar();
-
-	// Each time the image is changed, tell imgur to update the stats
-	$('.post-title').bind('DOMNodeInserted DOMNodeRemoved', function() {
-		injectNewVoteBar();
-	});
+	$(document).on('DOMCharacterDataModified', '.post-title', injectNewVoteBar);
 }
 
 function injectNewVoteBar()
 {
+	if($("#oldStatBar").length != 0)
+	{
+		window.setTimeout(injectNewVoteBar, 100);
+		return;
+	}
+
 	var upvoteCount = 1;
 	var downvoteCount = 0;
 
-	// Merge the two stat lines into one
-	$(".action-bar .views-info").css("clear", "none");
-	$(".point-info").css("margin-right", "0.5em");
-	$(".stats-link").css("width", "30%");
+	var oldStats = `<div id="oldStatBar" onclick="$('.post-action-stats-points').click()"style="height: 40%; width: 30%; max-width: 300px; background-color:#e44; margin-bottom: 0.2em; border-radius: 8px;" class="post-action-icon"> 
+						<div style="width: ` + upvoteCount*100/(upvoteCount+downvoteCount)  + `%; height: 100%; background-color: #85BF25; border-radius: 8px;"> </div>
+					</div>`;
 
-	var oldStats = '<div id="oldStatBar" style="height: 0.6em; width: 78%; max-width: 300px; margin-top:1.7em; background-color:#e44;"> <div style="width: ' + upvoteCount*100/(upvoteCount+downvoteCount) + '%; height: 100%; background-color: #85BF25;"> </div>';
 	if($("#oldStatBar").length == 0)
-		$(".stats-link").append(oldStats);
+		$(oldStats).insertAfter(".post-action-actions button:last");
 	else
-		$("#oldStatBar").html('<div style="width: ' + upvoteCount*100/(upvoteCount+downvoteCount) + '%; height: 100%; background-color: #85BF25;">');
+		$("#oldStatBar").html('<div style="width: ' + upvoteCount*100/(upvoteCount+downvoteCount)  + '%; height: 100%; background-color: #85BF25; border-radius: 8px;"> </div>');
 
 	// Get image data
 	$.get( window.location.href + ".json", function( data ) {
 		var upvoteCount = data.data.image.ups;
 		var downvoteCount = data.data.image.downs;
 
-		$("#oldStatBar").html('<div style="width: ' + upvoteCount*100/(upvoteCount+downvoteCount) + '%; height: 100%; background-color: #85BF25;">');
+		$("#oldStatBar").html('<div style="width: ' + upvoteCount*100/(upvoteCount+downvoteCount)  + '%; height: 100%; background-color: #85BF25; border-radius: 8px;"> </div>');
 	});
 }
 
 function detectVoteBombs()
 {
-	addLongPressListener(600, "#mainUpArrow", voteBomb, '.up');
-	addLongPressListener(600, "#mainDownArrow", voteBomb, '.down');
+	return; // Need to figure out different way to "click"
+	addLongPressListener(600, ".comment-vote.icon-upvote-fill", voteBomb, '.up');
+	addLongPressListener(600, ".comment-vote.icon-downvote-fill", voteBomb, '.down');
 }
 
 var vbType = 'na';
@@ -157,19 +169,20 @@ function voteBomb(upOdown)
 		return;
 	}
 
+	console.log(upOdown);
+
+
 	// Otherwise upvote everything
-	$(upOdown).not('.pushed').click();
 	vbType = upOdown;
 
 	// Also press the main arrow button if necessary
 	var mainArrow;
 	if(upOdown == '.up')
-		mainArrow = "#mainUpArrow";
+		mainArrow = ".comment-vote.icon-upvote-fill";
 	else
-		mainArrow = "#mainDownArrow";
+		mainArrow = ".comment-vote.icon-downvote-fill";
 
-	if($(mainArrow).not('.pushed').length != 0)
-		$(mainArrow).click();
+	$(mainArrow).click();
 }
 
 function addLongPressListener(presslength, query, func, param)
@@ -190,34 +203,45 @@ function addLongPressListener(presslength, query, func, param)
 	});
 }
 
+function startAddResizerButton()
+{
+	addResizerButton();
+	$(document).on('DOMCharacterDataModified', '.post-title', addResizerButton);
+}
+
+var imgContainerSize = 728;
+var sideBarSize = 320;
+var largePanelExtensionSize = 250;
+
+function addResizerButton()
+{
+	if($("#resizeButton").length != 0)
+	{
+		window.setTimeout(addResizerButton, 100);
+		return;
+	}
+
+	var resizeButton = '<img src="' + getCurrentResizePic() + '" id="resizeButton" style="height: 14px; margin-left: 16px; margin-right: -10px; -webkit-filter: invert(80%);" class="options-btn combobox post-menu right">';
+	$(".post-action-meta div:first").append(resizeButton);
+	$("#resizeButton").click(toggleSize);
+}
+
 function enlargeImagePanel()
 {
-	$("#inside").css("width", "1200px");
-	$(".post-container").css("width", "880px");
-	$(".post-header").css("width", "840px");
-	$(".post-title").css("max-width", "660px");
-	$("#comments-container").css("width", "840px");
-	$(".post-image img, .post-image video, .post-image object").css("width", "820px");
-
-	// MegaMode
-	/*
-$(".main-image .panel").css("width", "70vw");
-	$(".main-image .image img").css("max-width", "70vw");
-	$("#comments-container").css("width", "70vw");
-	$("#content").css("width", "93vw");
-$("#right-content").css("width", "20vw");
-$("#side-gallery").css("width", "100%");
-	*/
+	$("#inside").css("width", imgContainerSize + sideBarSize + largePanelExtensionSize + "px");
+	$(".post-container").css("width", imgContainerSize + largePanelExtensionSize + "px");
+	$(".post-header").css("width", imgContainerSize + largePanelExtensionSize + "px");
+	$("#comments-container").css("width", imgContainerSize + largePanelExtensionSize + "px");
+	$(".post-image img, .post-image video, .post-image object").css("max-width", imgContainerSize + largePanelExtensionSize + "px");
 }
 
 function revertToSmallImagePanel()
 {
-	$("#inside").css("width", "1000px");
-	$(".post-container").css("width", "680px");
-	$(".post-header").css("width", "640px");
-	$(".post-title").css("max-width", "440px");
-	$("#comments-container").css("width", "640px");
-	$(".post-image img, .post-image video, .post-image object").css("width", "620px");
+	$("#inside").css("width", imgContainerSize + sideBarSize + "px");
+	$(".post-container").css("width", imgContainerSize + "px");
+	$(".post-header").css("width", imgContainerSize + "px");
+	$("#comments-container").css("width", imgContainerSize + "px");
+	$(".post-image img, .post-image video, .post-image object").css("max-width", imgContainerSize + "px");;
 }
 
 function getCurrentResizePic()
@@ -227,13 +251,6 @@ function getCurrentResizePic()
 	}else {
 		return chrome.extension.getURL("res/fullscreen-enter-8x.png");
 	}
-}
-
-function addResizerButton()
-{
-	var resizeButton = '<img src="' + getCurrentResizePic() + '" id="resizeButton" style="height: 14px; margin-top: 12px; -webkit-filter: invert(60%);" class="options-btn combobox post-menu right">';
-	$(".image-options.button-container").prepend(resizeButton);
-	$("#resizeButton").click(toggleSize);
 }
 
 function toggleSize()
@@ -255,15 +272,19 @@ function toggleSize()
 	chrome.storage.sync.set({
 		largeImageModeEnabled: usingLargePanel
 	});
+
+	if(sideGalleryRemoved){
+		removeSideGallery();
+	}
 }
 
 
-function removeSideGallery(largePanelEnabled)
+function removeSideGallery()
 {
-	$("#right-content").remove();
-	$("#inside").css("width", "680px");
-	if(largePanelEnabled)
-		$("#inside").css("width", "885px");
+	$("#right-container").remove();
+	$("#inside").css("width", "728px");
+	if(usingLargePanel)
+		$("#inside").css("width", imgContainerSize + largePanelExtensionSize + "px");
 }
 
 function getDateString()
